@@ -1,0 +1,655 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Mouse2Touch UI</title>
+
+    <!--用於切換語言-->
+    <style id="style_lang"></style>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: rgb(248, 249, 250);
+        }
+
+        input,
+        button,
+        body {
+            font-family: "微軟正黑體", "Microsoft JhengHei", "黑體-繁", "蘋果儷中黑", "sans-serif";
+        }
+
+        .main_page {
+            margin: auto;
+            max-width: 550px;
+        }
+
+        .card_box {
+            box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.3);
+            background-color: rgb(255, 255, 255);
+            border-radius: 5px;
+            font-size: 16px;
+            overflow: hidden;
+            margin: 0px 10px;
+        }
+
+        .card_title {
+            margin-top: 20px;
+            margin-bottom: 5px;
+            margin-left: 10px;
+            font-size: 16px;
+        }
+
+        .radio_item label {
+            display: block;
+            padding-left: 38px;
+            box-sizing: border-box;
+            position: relative;
+            /* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
+            /* min-height: 40px; */
+            line-height: 20px;
+            cursor: pointer;
+            padding-top: 9px;
+            padding-bottom: 9px;
+            padding-right: 5px;
+        }
+
+
+
+        .radio_item:hover {
+            background-color: rgb(240, 240, 240);
+        }
+
+        .radio_item input[type=radio] {
+            display: none;
+        }
+
+        .radio_item label::before {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgb(95, 99, 104);
+            position: absolute;
+            top: 10px;
+            left: 12px;
+            content: "";
+            display: block;
+            border-radius: 50%;
+            box-sizing: border-box;
+        }
+
+        .radio_item label::after {
+            width: 8px;
+            height: 8px;
+            background-color: rgb(26, 115, 232);
+            position: absolute;
+            top: 15px;
+            left: 17px;
+            content: "";
+            display: block;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: all 0.2s;
+        }
+
+        .radio_item input[type="radio"]:checked + label::after {
+            transform: scale(1) !important;
+        }
+
+        .radio_item input[type="radio"]:checked + label::before {
+            border: 2px solid rgb(26, 115, 232);
+        }
+
+        /*-----*/
+        .card_item {
+            overflow: hidden;
+            border-bottom: 1px solid rgb(231, 231, 231);
+            position: relative;
+        }
+
+            .card_item:last-child {
+                border-bottom: 0px solid rgb(231, 231, 231);
+            }
+
+        .card_l {
+            float: left;
+        }
+
+        .card_r {
+            /* float: right; */
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
+
+            .card_r input {
+                box-sizing: border-box;
+                width: 80px;
+                height: 30px;
+                margin-top: 20px;
+                margin-right: 15px;
+                background-color: rgb(241, 243, 244);
+                border: 1px solid rgb(214, 214, 214);
+                border-radius: 4px;
+                text-align: center;
+                font-size: 14px;
+            }
+
+            .card_r button {
+                box-sizing: border-box;
+                min-width: 80px;
+                height: 30px;
+                margin-top: 20px;
+                margin-right: 15px;
+                background-color: rgb(255, 255, 255);
+                border: 1px solid rgb(214, 214, 214);
+                border-radius: 4px;
+                text-align: center;
+                font-size: 14px;
+                color: rgb(26, 115, 232);
+                cursor: pointer;
+                display: block;
+            }
+
+                .card_r button:hover {
+                    border: 1px solid rgb(71, 138, 226);
+                }
+
+                .card_r button:active {
+                    background-color: rgb(233, 243, 255);
+                    outline: none !important;
+                    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+                }
+
+        .card_l_title {
+            line-height: 24px;
+            /* min-height: 40px; */
+            margin-left: 15px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            margin-right: 110px;
+        }
+
+        .card_full {
+            margin-right: 10px !important;
+        }
+
+        .card_l_txt {
+            line-height: 20px;
+            /* min-height: 30px; */
+            margin-left: 15px;
+            color: rgb(128, 167, 152);
+            margin-right: 110px;
+            margin-bottom: 15px;
+        }
+
+        .text_ad_box {
+            margin: 5px 15px 15px 15px;
+            box-sizing: border-box;
+        }
+
+
+        #text_ad {
+            height: 110px;
+            outline: none;
+            box-sizing: border-box;
+            font-size: 14px;
+            background-color: rgb(241, 243, 244);
+            border: 1px solid rgb(214, 214, 214);
+            padding: 5px;
+            width: 100%;
+            display: block;
+        }
+    </style>
+
+
+
+    <style>
+        .table_lang {
+            width: 100%;
+            margin-top: 15px;
+        }
+
+            .table_lang td {
+                text-align: center;
+            }
+
+                .table_lang td div {
+                    /* height: 35px; */
+                    line-height: 25px;
+                    /* min-width: 100px; */
+                    padding: 6px 30px;
+                    display: inline-block;
+                    border-radius: 20px;
+                    cursor: pointer;
+                    border: 1px solid rgba(0, 0, 0, 0);
+                }
+
+                    .table_lang td div:hover {
+                        border: 1px solid rgb(71, 138, 226);
+                    }
+
+        .lang_but_sel {
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+            background-color: #FFF;
+        }
+    </style>
+
+
+
+    <script>
+
+
+        function getId(id) {
+            return document.getElementById(id);
+        }
+
+        var net = window.external;
+        var touch_speed = 1;
+        var Mtype = 'm_r_2';//none 、 m_b1 、 m_l 、 m_mm 、 m_r 、 m_r_2
+        var ad_list = '3D/blender/Maya/Unreal/Photoshop'.replace(/[/]/ig, '\n');
+        var lang = 'tw';
+        var bool_save = false;
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var s_json = net.get_config();
+
+            if (s_json != '') {
+                try {
+                    var json = JSON.parse(s_json);
+                    touch_speed = json['touch_speed'];
+                    Mtype = json['Mtype'];
+                    ad_list = decodeURIComponent(json['ad_list']);
+                    lang = json['lang'];
+                } catch (e) { }
+            }
+
+            set_lang(lang);
+            net.set_touch_speed(touch_speed);
+            net.set_Mtype(Mtype);
+            net.set_ad(ad_list);
+
+            getId('text_touch_speed').value = touch_speed;
+            getId('text_ad').value = ad_list;
+
+            if (Mtype == 'none') {
+                getId('c_1_r1').checked = true;
+
+            } else if (Mtype == 'm_b1') {
+                getId('c_1_r2').checked = true;
+
+            } else if (Mtype == 'm_mm') {
+                getId('c_1_r3').checked = true;
+
+            } else if (Mtype == 'm_r') {
+                getId('c_1_r4').checked = true;
+
+            } else if (Mtype == 'm_r_2') {
+                getId('c_1_r5').checked = true;
+
+            }
+
+            bool_save = true;
+
+        });
+
+        function set_touch_speed() {
+            var t = getId('text_touch_speed').value;
+            touch_speed = t;
+            net.set_touch_speed(t);
+            save_config();//儲存設定
+        }
+        function set_Mtype(x) {
+            Mtype = x;
+            net.set_Mtype(x);
+            save_config();//儲存設定
+        }
+        function hide_window() {
+            net.hide_window();
+        }
+        function set_ad() {
+            var t = getId('text_ad').value;
+            ad_list = t;
+            net.set_ad(t);
+            save_config();//儲存設定
+        }
+
+
+        function save_config() {
+
+            //避免初始化完成前，就儲存設定值
+            if (bool_save == false) {
+                return;
+            }
+
+            var obj_json = {
+                Mtype: Mtype,
+                touch_speed: touch_speed,
+                ad_list: encodeURIComponent(ad_list),
+                lang: lang
+            };
+            var s = JSON.stringify(obj_json);
+            net.set_config(s);
+        }
+
+        /**
+         * 設定語言
+         * @param s
+         */
+        function set_lang(s) {
+
+            lang = s;
+
+            getId('but_en').setAttribute('class', '');
+            getId('but_tw').setAttribute('class', '');
+            getId('but_jp').setAttribute('class', '');
+
+            var css = '';
+            if (s == 'en') {
+                css = '*[lg="tw"] , *[lg="jp"] { display:none }';
+                getId('but_en').setAttribute('class', 'lang_but_sel');
+
+            } else if (s == 'jp') {
+                css = '*[lg="en"] , *[lg="tw"] { display:none }';
+                getId('but_jp').setAttribute('class', 'lang_but_sel');
+
+            } else {
+                css = '*[lg="en"] , *[lg="jp"] { display:none }';
+                getId('but_tw').setAttribute('class', 'lang_but_sel');
+
+            }
+
+            getId('style_lang').innerHTML = css;
+
+            save_config();//儲存設定
+        }
+
+
+
+        function open_github() {
+            net.open_url('https://github.com/hbl917070/Mouse2Touch');
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+
+
+    <div class="main_page">
+
+        <div style="margin-top: -10px;"></div>
+
+        <div class="card_title">
+            <span lg="en">Mode</span>
+            <span lg="tw">模式</span>
+            <span lg="jp">モード</span>
+        </div>
+        <div class="card_box">
+
+            <div class="radio_item">
+                <input type="radio" id="c_1_r1" name="c_1">
+                <label for="c_1_r1" onclick="set_Mtype('none')">
+                    <span lg="en">Not enabled</span>
+                    <span lg="tw">不啟用</span>
+                    <span lg="jp">なし</span>
+                </label>
+            </div>
+
+            <div class="radio_item">
+                <input type="radio" id="c_1_r2" name="c_1">
+                <label for="c_1_r2" onclick="set_Mtype('m_b1')">
+                    <span lg="en">Mouse side button -> Touch</span>
+                    <span lg="tw">滑鼠側鍵 -> 觸控</span>
+                    <span lg="jp">マウスサイドボタン -> タッチ </span>
+                </label>
+            </div>
+
+            <div class="radio_item">
+                <input type="radio" id="c_1_r3" name="c_1">
+                <label for="c_1_r3" onclick="set_Mtype('m_mm')">
+                    <span lg="en">Middle mouse button -> Touch</span>
+                    <span lg="tw">滑鼠中鍵 -> 觸控</span>
+                    <span lg="jp">マウス中央ボタン -> タッチ </span>
+                </label>
+            </div>
+
+            <div class="radio_item">
+                <input type="radio" id="c_1_r4" name="c_1">
+                <label for="c_1_r4" onclick="set_Mtype('m_r')">
+                    <span lg="en">Right mouse button -> Touch (Long press to open Context Menu)</span>
+                    <span lg="tw">滑鼠右鍵 -> 觸控 (長按開啟右鍵選單)</span>
+                    <span lg="jp">マウスの「右クリック」 -> タッチ (長押ししてコンテキストメニューを開きます)</span>
+                </label>
+            </div>
+
+            <div class="radio_item">
+                <input type="radio" id="c_1_r5" name="c_1">
+                <label for="c_1_r5" onclick="set_Mtype('m_r_2')">
+                    <span lg="en">Right mouse button -> Touch (Click on the place to open the Context Menu)</span>
+                    <span lg="tw">滑鼠右鍵 -> 觸控 (原地點擊開啟右鍵選單)</span>
+                    <span lg="jp">マウスの「右クリック」 -> タッチ (場所をクリックしてコンテキストメニューを開きます)</span>
+                </label>
+            </div>
+        </div>
+
+
+
+        <div class="card_title">
+            <span lg="en">Other </span>
+            <span lg="tw">其他 </span>
+            <span lg="jp">追加オプション </span>
+        </div>
+        <div class="card_box">
+            <div class="card_item">
+                <div class="card_l">
+                    <div class="card_l_title">
+                        <span lg="en">Touch speed </span>
+                        <span lg="tw">觸控速度 </span>
+                        <span lg="jp">タッチ速度 </span>
+                    </div>
+                    <div class="card_l_txt">
+                        <span lg="en"> Allowable range 1.0 ~ 5.0 (Times) </span>
+                        <span lg="tw"> 可設定 1.0 ~ 5.0 (倍) </span>
+                        <span lg="jp"> 許容範囲 1.0 ~ 5.0 (倍) </span>
+                    </div>
+                </div>
+                <div class="card_r">
+                    <input type="text" id="text_touch_speed" onkeyup="set_touch_speed()">
+                </div>
+            </div>
+
+            <div class="card_item">
+                <div class="card_l">
+                    <div class="card_l_title">
+                        <span lg="en"> Hidden program </span>
+                        <span lg="tw"> 隱藏程式 </span>
+                        <span lg="jp"> プログラムを隠す </span>
+                    </div>
+                    <div class="card_l_txt">
+                        <span lg="en"> Hidden to the bottom right of the taskbar </span>
+                        <span lg="tw"> 縮小至工作列右下角 </span>
+                        <span lg="jp"> タスクバーの右下に非表示 </span>
+                    </div>
+                </div>
+                <div class="card_r">
+                    <button onclick="hide_window()">
+                        <span lg="en"> Hide </span>
+                        <span lg="tw"> 隱藏 </span>
+                        <span lg="jp"> 隠す </span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card_item">
+
+                <div class="card_l_title">
+
+                    <span lg="en"> Exclusion list </span>
+                    <span lg="tw"> 排除名單 </span>
+                    <span lg="jp"> 除外リスト </span>
+                </div>
+                <div class="card_l_txt card_full">
+
+
+                    <span lg="en">
+                        When you use these programs, Mouse2Touch will stop working. <br>
+                        Just enter Part of the name. <br>
+                        One line represents one. <br>
+                        case-insensitive.
+                    </span>
+                    <span lg="tw">
+                        Mouse2Touch 不會在這些程式下作用。<br>
+                        輸入局部名稱即可 、 一行一個 、 無視大小寫
+                    </span>
+                    <span lg="jp">
+                        これらのプログラムを使用する場合、Mouse2Touch は動作を停止します <br>
+                        機能するには「名前の一部」を入力してください<br>
+                        1本の線は1本を表します <br>
+                        大文字小文字を区別しない
+                    </span>
+                </div>
+                <div class="text_ad_box">
+                    <textarea id="text_ad" name="" cols="30" rows="10" onfocusout="set_ad()"></textarea>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+        <div class="card_title">
+
+            <span lg="en">About</span>
+            <span lg="tw">關於</span>
+            <span lg="jp">について</span>
+        </div>
+        <div class="card_box">
+            <div class="card_item">
+                <div class="card_l">
+                    <div class="card_l_title">
+                        Mouse2Touch
+                    </div>
+                    <div class="card_l_txt">
+                        1.0.0 (2020/05/12)
+                    </div>
+                </div>
+                <div class="card_r">
+
+                </div>
+            </div>
+
+            <div class="card_item">
+                <div class="card_l">
+                    <div class="card_l_title">
+                        GitHub
+                    </div>
+                    <div class="card_l_txt">
+                        Mouse2Touch
+                        <span lg="en"> Source code</span>
+                        <span lg="tw"> 原始碼</span>
+                        <span lg="jp"> ソースコード</span>
+                    </div>
+                </div>
+                <div class="card_r">
+                    <button onclick="open_github()">
+                        <span lg="en"> Open </span>
+                        <span lg="tw"> 查看 </span>
+                        <span lg="jp"> オンにする </span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card_item">
+                <div class="card_l">
+                    <div class="card_l_title">
+                        <span lg="en"> Author </span>
+                        <span lg="tw"> 作者 </span>
+                        <span lg="jp"> 作者 </span>
+                    </div>
+                    <div class="card_l_txt">
+                        hbl917070 (深海異音)<br>
+                        Email : hbl917070@gmail.com <br>
+                        巴哈姆特 : https://home.gamer.com.tw/hbl917070
+                    </div>
+                </div>
+                <div class="card_r">
+
+                </div>
+            </div>
+
+            <div class="card_item">
+                <div class="card_l">
+                    <div class="card_l_title">
+                        <span lg="en"> Introduction </span>
+                        <span lg="tw"> 說明 </span>
+                        <span lg="jp"> 説明 </span>
+                    </div>
+                    <div class="card_l_txt card_full">
+                        <div lg="en">
+                            Turn specific mouse button into touch mode.
+                            <div style="height:15px"></div>
+                            Some programs running as the system administrator will cause the program to be useless. Run
+                            Mouse2Touch as the system administrator to solve this problem.
+                            <div style="height:15px"></div>
+                            Because the mouse is also moving during the touch process, this will cause some few programs
+                            to be unable to drag in the touch mode. <br>
+                            ex: Office 2016 OneNote
+                        </div>
+                        <div lg="tw">
+                            讓滑鼠特定按鍵變成觸控模式，增加控制的靈活性。
+                            <div style="height:15px"></div>
+                            某些以系統管理員身份執行的程式會導致程式失去作用， 用系統管理員身份執行 Mouse2Touch 即可解決此問題。
+                            <div style="height:15px"></div>
+                            因為觸控過程中滑鼠也在移動，這將導致某些少數的程式無法以觸控模式進行拖曳作業。<br>
+                            例如：Office 2016 OneNote
+                        </div>
+                        <div lg="jp">
+                            特定のマウスボタンをタッチモードに変更する。
+                            <div style="height:15px"></div>
+                            システム管理者として実行されるプログラムは、 Mouse2Touch を操作不能にします。
+                            この問題を解決するには、システム管理者としてmouse2Touchを実行してください。
+                            <div style="height:15px"></div>
+                            タッチプロセス中にマウスも動いているため、一部のプログラムはタッチでドラッグできません。<br>
+                            例：Office 2016 OneNote
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card_title">
+            <div style="height:30px"></div>
+        </div>
+        <div style="overflow:auto">
+            <table class="table_lang">
+                <tr>
+                    <td><div id="but_en" onclick="set_lang('en')">English</div></td>
+                    <td><div id="but_tw" onclick="set_lang('tw')">中文</div></td>
+                    <td><div id="but_jp" onclick="set_lang('jp')">日文</div></td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="height:60px"></div>
+    </div>
+
+</body>
+
+</html>
