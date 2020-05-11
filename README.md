@@ -7,9 +7,12 @@ Mouse2Touch 能在任何普通的滑鼠上新增觸控功能，<br>
 
 
 
-- 運行環境win8、win10
+- 運行環境：win8、win10
 - 運行需求：net framework 4.5
-- 語言：English、日文、中文
+- 提供語言：English、日文、中文
+
+### 下載
+https://github.com/hbl917070/Mouse2Touch/releases/
 
 
 ### 程式截圖
