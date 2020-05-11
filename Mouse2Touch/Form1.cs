@@ -199,6 +199,7 @@ namespace Mouse2Touch {
                                 bool_m_handled = false;
                             }
 
+                            //模擬觸控-開始
                             contact = MakePointerTouchInfo(pp.X, pp.Y);
                             oFlags = PointerFlags.DOWN | PointerFlags.INRANGE | PointerFlags.INCONTACT;
                             contact.PointerInfo.PointerFlags = oFlags;
@@ -216,6 +217,7 @@ namespace Mouse2Touch {
 
                             if (mtype == Mtype.滑鼠右鍵) { bool_m_handled = false; }
 
+                            //模擬觸控-結束
                             contact.PointerInfo.PointerFlags = PointerFlags.UP;
                             TouchInjector.InjectTouchInput(1, new[] { contact });
 
@@ -232,6 +234,7 @@ namespace Mouse2Touch {
                             int nMoveIntervalX = (int)((p2.X - pp.X) * f_touch_speed);
                             int nMoveIntervalY = (int)((p2.Y - pp.Y) * f_touch_speed);
 
+                            //模擬觸控-移動
                             contact.Move(nMoveIntervalX, nMoveIntervalY);
                             oFlags = PointerFlags.INRANGE | PointerFlags.INCONTACT | PointerFlags.UPDATE;
                             contact.PointerInfo.PointerFlags = oFlags;
@@ -293,8 +296,10 @@ namespace Mouse2Touch {
         /// <returns></returns>
         bool overd_sc(Point p) {
 
-            var sc = Screen.GetWorkingArea(p);
-            if (p.X <= sc.X || p.Y <= sc.Y || (p.X >= sc.X + sc.Width) || (p.Y >= sc.Y + sc.Height)) {
+            //var sc = Screen.GetWorkingArea(p);//不含工作列
+            var sc = Screen.FromPoint(p).Bounds;//包含工作列
+
+            if (p.X <= sc.X + 1 || p.Y <= sc.Y + 1 || (p.X >= sc.X + sc.Width - 1) || (p.Y >= sc.Y + sc.Height - 1)) {
                 return true;
             }
 

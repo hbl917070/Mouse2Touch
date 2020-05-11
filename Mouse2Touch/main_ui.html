@@ -211,34 +211,39 @@
 
 
     <style>
-        .table_lang {
-            width: 100%;
-            margin-top: 15px;
+        .lang_box {
+            width: 100%; 
+            overflow:auto;
+            padding:10px 0px;
         }
 
-            .table_lang td {
+            .lang_box .lang_box_item {
                 text-align: center;
+                width: 33%;
+                float: left;
+                min-width:100px;
             }
 
-                .table_lang td div {
-                    /* height: 35px; */
-                    line-height: 25px;
-                    /* min-width: 100px; */
-                    padding: 6px 30px;
-                    display: inline-block;
-                    border-radius: 20px;
-                    cursor: pointer;
-                    border: 1px solid rgba(0, 0, 0, 0);
-                }
+        .lang_box_but {
+     
+            margin:5px 0px;
+            line-height: 25px;
 
-                    .table_lang td div:hover {
-                        border: 1px solid rgb(71, 138, 226);
-                    }
-
-        .lang_but_sel {
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-            background-color: #FFF;
+            padding: 6px 30px;
+            display: inline-block;
+            border-radius: 20px;
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0);
         }
+
+        .lang_box_but:hover {
+            border: 1px solid rgb(71, 138, 226);
+        }
+
+            .lang_box_but[lang_but_sel=true] {
+                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+                background-color: #FFF;
+            }
     </style>
 
 
@@ -251,10 +256,10 @@
         }
 
         var net = window.external;
-        var touch_speed = 1;
+        var touch_speed = 1;//觸控速度
         var Mtype = 'm_r_2';//none 、 m_b1 、 m_l 、 m_mm 、 m_r 、 m_r_2
-        var ad_list = '3D/blender/Maya/Unreal/Photoshop'.replace(/[/]/ig, '\n');
-        var lang = 'tw';
+        var ad_list = '3D/blender/Maya/Unreal/Photoshop'.replace(/[/]/ig, '\n');//過濾名單
+        var lang = 'tw';//語言
         var bool_save = false;
 
 
@@ -348,22 +353,22 @@
 
             lang = s;
 
-            getId('but_en').setAttribute('class', '');
-            getId('but_tw').setAttribute('class', '');
-            getId('but_jp').setAttribute('class', '');
+            getId('but_en').setAttribute('lang_but_sel', '');
+            getId('but_tw').setAttribute('lang_but_sel', '');
+            getId('but_jp').setAttribute('lang_but_sel', '');
 
             var css = '';
             if (s == 'en') {
                 css = '*[lg="tw"] , *[lg="jp"] { display:none }';
-                getId('but_en').setAttribute('class', 'lang_but_sel');
+                getId('but_en').setAttribute('lang_but_sel', 'true');
 
             } else if (s == 'jp') {
                 css = '*[lg="en"] , *[lg="tw"] { display:none }';
-                getId('but_jp').setAttribute('class', 'lang_but_sel');
+                getId('but_jp').setAttribute('lang_but_sel', 'true');
 
             } else {
                 css = '*[lg="en"] , *[lg="jp"] { display:none }';
-                getId('but_tw').setAttribute('class', 'lang_but_sel');
+                getId('but_tw').setAttribute('lang_but_sel', 'true');
 
             }
 
@@ -388,7 +393,7 @@
 
     <div class="main_page">
 
-        <div style="margin-top: -10px;"></div>
+        <div style="margin-top: -5px;"></div>
 
         <div class="card_title">
             <span lg="en">Mode</span>
@@ -424,7 +429,8 @@
                 </label>
             </div>
 
-            <div class="radio_item">
+            <!--此選項有BUG未解決-->
+            <div class="radio_item" style="display:none">
                 <input type="radio" id="c_1_r4" name="c_1">
                 <label for="c_1_r4" onclick="set_Mtype('m_r')">
                     <span lg="en">Right mouse button -> Touch (Long press to open Context Menu)</span>
@@ -459,7 +465,7 @@
                         <span lg="jp">タッチ速度 </span>
                     </div>
                     <div class="card_l_txt">
-                        <span lg="en"> Allowable range 1.0 ~ 5.0 (Times) </span>
+                        <span lg="en"> Allowable range 1.0 ~ 5.0 (multiple) </span>
                         <span lg="tw"> 可設定 1.0 ~ 5.0 (倍) </span>
                         <span lg="jp"> 許容範囲 1.0 ~ 5.0 (倍) </span>
                     </div>
@@ -531,7 +537,6 @@
 
 
         <div class="card_title">
-
             <span lg="en">About</span>
             <span lg="tw">關於</span>
             <span lg="jp">について</span>
@@ -539,10 +544,10 @@
         <div class="card_box">
             <div class="card_item">
                 <div class="card_l">
-                    <div class="card_l_title">
+                    <div class="card_l_title card_full">
                         Mouse2Touch
                     </div>
-                    <div class="card_l_txt">
+                    <div class="card_l_txt card_full">
                         1.0.0 (2020/05/12)
                     </div>
                 </div>
@@ -637,15 +642,15 @@
         <div class="card_title">
             <div style="height:30px"></div>
         </div>
-        <div style="overflow:auto">
-            <table class="table_lang">
-                <tr>
-                    <td><div id="but_en" onclick="set_lang('en')">English</div></td>
-                    <td><div id="but_tw" onclick="set_lang('tw')">中文</div></td>
-                    <td><div id="but_jp" onclick="set_lang('jp')">日文</div></td>
-                </tr>
-            </table>
-        </div>
+
+       
+
+            <div class="lang_box">
+                <div class="lang_box_item"> <div class="lang_box_but" id="but_en" onclick="set_lang('en')">English</div> </div>
+                <div class="lang_box_item"> <div class="lang_box_but" id="but_tw" onclick="set_lang('tw')">中文</div> </div>
+                <div class="lang_box_item"> <div class="lang_box_but" id="but_jp" onclick="set_lang('jp')">日文</div> </div>
+            </div>
+
 
         <div style="height:60px"></div>
     </div>
